@@ -1,0 +1,39 @@
+---
+- name: Setup raspberry
+  hosts: all
+
+  roles:
+    - cloudalchemy.node-exporter
+
+  tasks:
+    # Adjust the Fan thresholds acc to
+    # https://raspberrypi.stackexchange.com/questions/98078/poe-hat-fan-activation-on-os-other-than-raspbian
+    - name: Adjust PoE HAT Fan thresholds via udev
+      become: true
+      copy:
+        dest: /etc/udev/rules.d/50-rpi-fan.rules
+        content: |
+          SUBSYSTEM=="thermal"
+          KERNEL=="thermal_zone0"
+
+          # If the temp hits 60c, turn on the fan. Turn it off again when it goes back down to 70.
+          ATTR{trip_point_3_temp}="60000"
+          ATTR{trip_point_3_hyst}="5000"
+          #
+          # If the temp hits 75c, higher RPM.
+          ATTR{trip_point_2_temp}="75000"
+          ATTR{trip_point_2_hyst}="5000"
+          #
+          # If the temp hits 80c, higher RPM.
+          ATTR{trip_point_1_temp}="80000"
+          ATTR{trip_point_1_hyst}="5000"
+          #
+          # If the temp hits 82c, highest RPM.
+          ATTR{trip_point_0_temp}="82000"
+          ATTR{trip_point_0_hyst}="2000"
+      register: fan_rules
+
+    - name: Apply new udev rule
+      become: true
+      shell: udevadm control --reload-rules && udevadm trigger
+      when: fan_rules.changed
