@@ -1,0 +1,6 @@
+---
+- name: Setup raspberry
+  import_playbook: setup-raspberry.yaml
+
+- name: Ensure docker
+  import_playbook: ensure-docker.yaml
