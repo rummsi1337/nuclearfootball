@@ -1,6 +1,7 @@
 # .ansible-lint
 exclude_paths:
 - .github/
+- k3s-ansible/
 - roles/cloudalchemy.node-exporter/
 - roles/geerlingguy.docker/
 - roles/geerlingguy.pip/
