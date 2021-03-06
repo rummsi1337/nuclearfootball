@@ -1,0 +1,14 @@
+---
+all:
+  vars:
+    ansible_ssh_user: vagrant
+    ansible_ssh_private_key_file: ~/.vagrant.d/insecure_private_key
+  hosts:
+    kube1:
+      ansible_host: 192.168.77.2
+    kube2:
+      ansible_host: 192.168.77.3
+    kube3:
+      ansible_host: 192.168.77.4
+    kube4:
+      ansible_host: 192.168.77.5
