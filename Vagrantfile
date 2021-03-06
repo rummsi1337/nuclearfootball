@@ -11,6 +11,7 @@ ENV["VAGRANT_OLD_ENV_OBJC_DISABLE_INITIALIZE_FORK_SAFETY"] = "YES"
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.box = "ubuntu/groovy64"
+  config.vbguest.auto_update = false  # Do not install guest additions
 
   boxes = [
     { :name => "kube1", :ip => "192.168.77.2" },
@@ -20,7 +21,7 @@ Vagrant.configure("2") do |config|
   ]
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "512"
+    vb.memory = "1024"
     vb.cpus = "1"
   end
 
@@ -35,7 +36,7 @@ Vagrant.configure("2") do |config|
           ansible.playbook = "main.yaml"
           ansible.inventory_path = "vagrant_inventory.yaml"
           ansible.limit = "all"
-          # ansible.tags = "raspi"
+          ansible.skip_tags = "docker"
           ansible.verbose == "vv"
         end
       end
