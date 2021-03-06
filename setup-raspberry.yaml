@@ -12,6 +12,9 @@
       become: true
       copy:
         dest: /etc/udev/rules.d/50-rpi-fan.rules
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
         content: |
           SUBSYSTEM=="thermal"
           KERNEL=="thermal_zone0"
@@ -32,8 +35,10 @@
           ATTR{trip_point_0_temp}="82000"
           ATTR{trip_point_0_hyst}="2000"
       register: fan_rules
+      notify:
+        - Apply udev rule
 
-    - name: Apply new udev rule
+  handlers:
+    - name: Apply udev rule
       become: true
       shell: udevadm control --reload-rules && udevadm trigger
-      when: fan_rules.changed
