@@ -1,0 +1,6 @@
+# .ansible-lint
+exclude_paths:
+- .github/
+- roles/cloudalchemy.node-exporter/
+- roles/geerlingguy.docker/
+- roles/geerlingguy.pip/
