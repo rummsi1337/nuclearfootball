@@ -6,3 +6,7 @@
 - name: Ensure docker
   import_playbook: ensure-docker.yaml
   tags: docker
+
+- name: Install k3s
+  import_playbook: k3s-ansible/site.yml
+  tags: k3s

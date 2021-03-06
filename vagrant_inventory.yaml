@@ -1,0 +1,28 @@
+---
+all:
+  vars:
+    ansible_ssh_user: vagrant
+    ansible_ssh_private_key_file: ~/.vagrant.d/insecure_private_key
+
+    k3s_version: v1.20.4+k3s1
+    ansible_user: vagrant
+    systemd_dir: /etc/systemd/system
+    master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+    extra_server_args: "--flannel-iface enp0s8"
+    extra_agent_args: "--flannel-iface enp0s8"
+
+  children:
+    k3s_cluster:
+      children:
+        master:
+          hosts:
+            kube1:
+              ansible_host: 192.168.77.2
+        node:
+          hosts:
+            kube2:
+              ansible_host: 192.168.77.3
+            kube3:
+              ansible_host: 192.168.77.4
+            kube4:
+              ansible_host: 192.168.77.5
