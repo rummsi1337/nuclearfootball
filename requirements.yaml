@@ -2,4 +2,4 @@
 # from galaxy
 - src: geerlingguy.pip
 - src: geerlingguy.docker
-- src: cloudalchemy.node-exporter
+- src: cloudalchemy.node_exporter
