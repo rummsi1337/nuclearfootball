@@ -4,7 +4,7 @@ name: yamllint
 on: push
 
 jobs:
-  delivery:
+  yamllint:
 
     runs-on: ubuntu-latest
 

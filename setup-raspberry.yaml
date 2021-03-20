@@ -3,7 +3,7 @@
   hosts: all
 
   roles:
-    - cloudalchemy.node-exporter
+    - cloudalchemy.node_exporter
 
   tasks:
     # Adjust the Fan thresholds acc to
